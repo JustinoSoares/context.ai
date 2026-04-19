@@ -1,41 +1,111 @@
+"use client";
+
+import { BackgroundBlobs } from "@/components/shared/background-blobs";
+import Particles from "@/components/shared/background-chat";
+import TypingText from "@/components/shared/typing-text";
 import { Button } from "@/components/ui/button";
-import { SquareArrowOutUpRight } from "lucide-react";
+import { SpinnerCustom } from "@/components/ui/loading";
+import { uploadFile } from "@/services/api/routers";
+import { useMutation } from "@tanstack/react-query";
+import { ArrowUpFromLine, SquareArrowOutUpRight } from "lucide-react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
+  const { mutate: upload, isPending } = useMutation({
+    mutationFn: uploadFile,
+  });
+
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) {
+      toast.error("Nenhum arquivo selecionado");
+      return;
+    }
+
+    upload(file, {
+      onSuccess: (data) => {
+        router.push(`/chat/${data.document_id}`);
+      },
+      onError: (error) => {
+        toast.error(
+          error instanceof Error ? error.message : "Erro ao fazer upload",
+        );
+      },
+    });
+  };
+
   return (
-    <div>
-      <header className="flex justify-between items-center py-4 px-8">
-        <h2 className=" text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+    <div className="flex flex-col h-screen overflow-hidden">
+      {isPending && <SpinnerCustom />}
+
+      {/* Particles */}
+      <div className="fixed inset-0 ">
+        <Particles
+          particleColors={["#F15B04"]}
+          particleCount={200}
+          particleSpread={10}
+          speed={0.2}
+          particleBaseSize={100}
+          moveParticlesOnHover
+          alphaParticles={false}
+          disableRotation={false}
+          pixelRatio={1}
+        />
+      </div>
+
+      {/* Header */}
+      <header className="flex justify-between items-center py-4 px-4 shrink-0">
+        <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
           Context AI
         </h2>
-        <div className="flex justify-center items-center gap-1">
-          <Button variant="outline">Get Started</Button>
-          <Button variant="default">Get Started</Button>
+        <div className="hidden sm:flex  items-center gap-1 sm:gap-4">
+          <Button variant="outline" >Login</Button>
+          <Button variant="default">Signin</Button>
         </div>
       </header>
-      <div className="flex justify-center items-center min-h-[calc(100vh-30vh)]">
-        <div className="flex flex-col justify-center items-center max-w-7xl mx-auto py-20 px-4 text-center">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-primary opacity-30 blur-3xl rounded-full" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary opacity-30 blur-3xl rounded-full" />
-          <h1 className="text-4xl font-bold text-foreground mb-4 w-2xl">
-            Context AI Builded with goals to be the best AI assistant for
-            everyone.
-          </h1>
-          <p className="text-lg text-muted-foreground mb-8 w-4xl">
-            Your AI-powered assistant for all your needs. From scheduling to
-            reminders, we’ve got you covered. Experience the future of
-            productivity with Context AI. 
-          </p>
-          <Button variant="default">Get Started</Button>
-        </div>
-     
-      </div>
-         <footer className="absolute bottom-0 w-full px-8 py-4">
-          <div className="flex justify-end items-center gap-2 text-xl text-muted-foreground">
 
-          <Button size="lg" variant="link">Himersus <SquareArrowOutUpRight className="w-4 h-4 gap-1" /></Button>
+      {/* Main */}
+      <main className="flex-1 flex justify-center items-center px-4">
+        <div className="flex flex-col justify-center items-center w-full max-w-2xl text-center">
+          <BackgroundBlobs />
+
+          <h1 className="text-3xl sm:text-4xl md:text-4xl font-bold text-foreground mb-4">
+            <TypingText />
+          </h1>
+
+          <p className="text-base sm:text-lg text-muted-foreground mb-8 max-w-xl">
+            {
+              "Seu assistente com inteligência artificial para tudo o que você precisa. \
+              De organização de tarefas a lembretes, o Context AI cuida de tudo para você.\
+              Experimente uma nova forma de ser produtivo."
+            }
+          </p>
+
+          <div className="relative z-50">
+            <input
+              type="file"
+              className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+              onChange={handleUpload}
+              disabled={isPending}
+            />
+            <Button variant="default" size="lg">
+              Context <ArrowUpFromLine className="w-4 h-4 ml-1" />
+            </Button>
           </div>
-        </footer>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="shrink-0 px-8 py-4">
+        <div className="flex justify-end items-center gap-2 text-muted-foreground">
+          <Button size="lg" variant="link">
+            Himersus <SquareArrowOutUpRight className="w-4 h-4 ml-1" />
+          </Button>
+        </div>
+      </footer>
     </div>
   );
 }

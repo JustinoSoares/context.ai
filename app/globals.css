@@ -87,7 +87,6 @@
   :root {
     --primary: #F15B04;
     --secondary: #413620;
-
   }
 }
 
@@ -139,4 +138,20 @@ body {
   html {
     @apply font-sans;
   }
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  50% {
+    transform: translate(30px, -40px) scale(1.1);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+html, body, #__next {
+  height: 100%;
 }
