@@ -7,7 +7,12 @@ import { Button } from "@/components/ui/button";
 import { SpinnerCustom } from "@/components/ui/loading";
 import { uploadFile } from "@/services/api/routers";
 import { useMutation } from "@tanstack/react-query";
-import { ArrowUpFromLine, SquareArrowOutUpRight } from "lucide-react";
+import {
+  ArrowUpFromLine,
+  LogIn,
+  SquareArrowOutUpRight,
+  UserPlus,
+} from "lucide-react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { SheetDemo } from "@/components/ui/sheet-menu";
@@ -66,8 +71,12 @@ export default function Home() {
           Context AI
         </h2>
         <div className="hidden sm:flex  items-center gap-1 sm:gap-1">
-          <Button variant="outline">Login</Button>
-          <Button variant="default">Signin</Button>
+          <Button variant="outline">
+            <LogIn className="w-4 h-4 mr-2" /> Login
+          </Button>
+          <Button variant="default">
+            <UserPlus className="w-4 h-4 mr-2" /> Signin
+          </Button>
         </div>
         <div className="flex sm:hidden z-50">
           <SheetDemo />

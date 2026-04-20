@@ -7,8 +7,10 @@ import {
   Check,
   Copy,
   Images,
+  LogIn,
   SendHorizontal,
   Settings,
+  UserPlus,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -156,8 +158,12 @@ export default function ChatPage() {
           <div className="hover:bg-gray-100 cursor-pointer p-2 rounded-full">
             <Settings className="w-5 h-5" />
           </div>
-          <Button variant="outline">Login</Button>
-          <Button variant="default">Signin</Button>
+          <Button variant="outline">
+            <LogIn className="w-4 h-4 mr-2" /> Login
+          </Button>
+          <Button variant="default">
+            <UserPlus className="w-4 h-4 mr-2" /> Signin
+          </Button>
         </div>
         <div className="flex sm:hidden">
           <SheetDemo />
