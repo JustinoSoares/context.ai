@@ -141,7 +141,7 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden px-3 sm:px-4 py-3 sm:py-4">
+    <div className="flex flex-col h-[100dvh] overflow-hidden px-3 sm:px-4 py-3 sm:py-4">
       <BackgroundBlobs />
 
       {/* Header */}
@@ -174,10 +174,11 @@ export default function ChatPage() {
       <div className="flex-1 min-h-0 max-w-3xl mx-auto w-full mt-4 sm:mt-6">
         <div
           className="h-full flex flex-col gap-3 px-2 sm:px-4 py-4 overflow-y-auto
-            [scrollbar-width:thin]
-            [scrollbar-color:transparent_transparent]
-            hover:[scrollbar-color:hsl(var(--primary)/0.3)_transparent]
-            transition-colors"
+                    [scrollbar-width:thin]
+                    [scrollbar-color:transparent_transparent]
+                    hover:[scrollbar-color:hsl(var(--primary)/0.3)_transparent]
+                    transition-colors
+                    [-webkit-overflow-scrolling:touch]"
         >
           {messages.length === 0 && (
             <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm text-center px-4">
@@ -201,7 +202,7 @@ export default function ChatPage() {
       </div>
 
       {/* Input */}
-      <div className="flex justify-center pb-2 shrink-0">
+      <div className="flex justify-center pb-[env(safe-area-inset-bottom)] shrink-0">
         <div className="flex items-end gap-2 border w-full max-w-2xl p-3 rounded-2xl bg-gray-100/90 backdrop-blur border-gray-200 shadow-md">
           <Brain className="text-primary mb-[5px] shrink-0" />
           <textarea
@@ -209,7 +210,7 @@ export default function ChatPage() {
             onInput={handleInput}
             onKeyDown={handleKeyDown}
             rows={1}
-            className="flex-1 w-full resize-none outline-none border-none bg-transparent max-h-40 overflow-y-auto leading-relaxed text-sm py-[5px]"
+            className="flex-1 w-full pb-safe resize-none outline-none border-none bg-transparent max-h-40 overflow-y-auto leading-relaxed text-sm py-[5px]"
             placeholder="Type your message..."
           />
           <div

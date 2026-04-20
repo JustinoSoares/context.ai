@@ -32,6 +32,13 @@ export default function Home() {
       return;
     }
 
+    if (file.size === 0) {
+      toast.error(
+        "Ficheiro inválido. Selecciona um ficheiro do teu dispositivo.",
+      );
+      return;
+    }
+
     upload(file, {
       onSuccess: (data) => {
         router.push(`/chat/${data.document_id}`);
@@ -106,6 +113,8 @@ export default function Home() {
               className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
               onChange={handleUpload}
               disabled={isPending}
+              accept=".pdf,.txt,.docx,.md"
+              capture={false}
               onClick={(e) => {
                 (e.target as HTMLInputElement).value = "";
               }}

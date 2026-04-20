@@ -2,6 +2,10 @@ import { Inter } from "next/font/google";
 import { ReactQueryProvider } from "@/providers/react-query-provider";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, viewport-fit=cover"
+/>;
 
 const inter = Inter({
   subsets: ["latin"],
