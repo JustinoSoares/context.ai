@@ -9,6 +9,7 @@ O Context AI permite que faças upload de documentos (PDF, TXT, DOCX) e converse
 ## Tecnologias
 
 ### Backend
+
 - **Python 3.11** com **FastAPI**
 - **PostgreSQL** + **pgvector** — armazenamento de embeddings
 - **SQLAlchemy** + **Alembic** — ORM e migrações
@@ -18,6 +19,7 @@ O Context AI permite que faças upload de documentos (PDF, TXT, DOCX) e converse
 - **Uvicorn** — servidor ASGI
 
 ### Frontend
+
 - **Next.js** (App Router)
 - **TanStack Query** — gestão de estado assíncrono
 - **Tailwind CSS** — estilos
@@ -41,6 +43,7 @@ O Context AI permite que faças upload de documentos (PDF, TXT, DOCX) e converse
 ```
 
 **Fluxo de upload:**
+
 1. Ficheiro enviado via `multipart/form-data`
 2. Parser extrai o texto (PDF/DOCX/TXT)
 3. Texto dividido em chunks
@@ -48,6 +51,7 @@ O Context AI permite que faças upload de documentos (PDF, TXT, DOCX) e converse
 5. Embeddings guardados no PostgreSQL via pgvector
 
 **Fluxo de pergunta:**
+
 1. Pergunta convertida em embedding
 2. Busca por similaridade coseno (`<->`) no pgvector
 3. Top 5 chunks mais relevantes enviados ao Groq como contexto
@@ -157,6 +161,7 @@ docker compose exec api alembic upgrade head
 ```
 
 Serviços disponíveis:
+
 - API: `http://localhost:8000`
 - PostgreSQL: `localhost:5432`
 
@@ -166,15 +171,15 @@ Serviços disponíveis:
 
 ### Backend (`.env`)
 
-| Variável | Descrição | Exemplo |
-|---|---|---|
+| Variável       | Descrição                    | Exemplo                                                    |
+| -------------- | ---------------------------- | ---------------------------------------------------------- |
 | `DATABASE_URL` | URL de conexão ao PostgreSQL | `postgresql://postgres:postgres@localhost:5432/context_ia` |
-| `GROQ_API_KEY` | Chave da API do Groq | `gsk_...` |
+| `GROQ_API_KEY` | Chave da API do Groq         | `gsk_...`                                                  |
 
 ### Frontend (`.env.local`)
 
-| Variável | Descrição | Exemplo |
-|---|---|---|
+| Variável              | Descrição       | Exemplo                 |
+| --------------------- | --------------- | ----------------------- |
 | `NEXT_PUBLIC_API_URL` | URL base da API | `http://localhost:8000` |
 
 ---
@@ -219,14 +224,17 @@ api-context-ai/
 Faz upload de um documento e processa os embeddings.
 
 **Request:** `multipart/form-data`
+
 - `file` — ficheiro PDF, TXT ou DOCX (máx. 10MB)
 
 **Response:**
+
 ```json
 { "document_id": "uuid-do-documento" }
 ```
 
 **Erros comuns:**
+
 - `415` — extensão não permitida
 - `413` — ficheiro demasiado grande
 
@@ -237,6 +245,7 @@ Faz upload de um documento e processa os embeddings.
 Faz uma pergunta sobre um documento já carregado.
 
 **Request:**
+
 ```json
 {
   "question": "Qual é o diagnóstico?",
@@ -245,6 +254,7 @@ Faz uma pergunta sobre um documento já carregado.
 ```
 
 **Response:**
+
 ```json
 { "answer": "Resposta gerada pelo modelo..." }
 ```
@@ -263,13 +273,13 @@ Faz uma pergunta sobre um documento já carregado.
 
 Usa [Conventional Commits](https://www.conventionalcommits.org/):
 
-| Prefixo | Uso |
-|---|---|
-| `feat:` | Nova funcionalidade |
-| `fix:` | Correcção de bug |
-| `docs:` | Documentação |
+| Prefixo     | Uso                                         |
+| ----------- | ------------------------------------------- |
+| `feat:`     | Nova funcionalidade                         |
+| `fix:`      | Correcção de bug                            |
+| `docs:`     | Documentação                                |
 | `refactor:` | Refactorização sem mudança de comportamento |
-| `chore:` | Tarefas de manutenção |
+| `chore:`    | Tarefas de manutenção                       |
 
 ---
 

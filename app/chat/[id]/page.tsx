@@ -17,7 +17,6 @@ import ReactMarkdown from "react-markdown";
 import { ask } from "@/services/api/routers";
 import { SheetDemo } from "@/components/ui/sheet-menu";
 import TypingText from "@/components/shared/typing-text";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 type Props = {
@@ -82,7 +81,6 @@ export default function ChatPage() {
   const document_id = params.id as string;
   const queryClient = useQueryClient();
   const [isTyping, setIsTyping] = useState(false);
-  const router = useRouter();
 
   const { mutate: askAI } = useMutation({
     mutationFn: ({ question, document_id }: AskParams) =>
