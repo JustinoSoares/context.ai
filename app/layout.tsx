@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} h-full antialiased light text-md`}
+      className={`${inter.variable} h-full antialiased light! text-md`}
     >
       <body className="min-h-full font-sans flex flex-col">
         <ReactQueryProvider>

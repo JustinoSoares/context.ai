@@ -46,7 +46,7 @@ export default function Home() {
       {isPending && <SpinnerCustom />}
 
       {/* Particles */}
-      <div className="fixed inset-0 ">
+      <div className="fixed inset-0">
         <Particles
           particleColors={["#F15B04"]}
           particleCount={200}
@@ -110,7 +110,17 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="shrink-0 px-8 py-4">
-        <div className="flex justify-end items-center gap-2 text-muted-foreground">
+        <div className="flex sm:justify-end justify-between items-center gap-2 text-muted-foreground ">
+          <Button
+            size="lg"
+            variant="link"
+            className="cursor-pointer z-30"
+            onClick={() =>
+              window.open("https://github.com/JustinoSoares", "_blank")
+            }
+          >
+            Justino Soares <SquareArrowOutUpRight className="w-4 h-4 ml-1" />
+          </Button>
           <Button size="lg" variant="link">
             Himersus <SquareArrowOutUpRight className="w-4 h-4 ml-1" />
           </Button>
