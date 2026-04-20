@@ -85,7 +85,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --primary: #F15B04;
+    --primary: #f15b04;
     --secondary: #413620;
   }
 }
@@ -152,6 +152,8 @@ body {
   }
 }
 
-html, body, #__next {
+html,
+body,
+#__next {
   height: 100%;
 }

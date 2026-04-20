@@ -10,6 +10,8 @@ import { useMutation } from "@tanstack/react-query";
 import { ArrowUpFromLine, SquareArrowOutUpRight } from "lucide-react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { SheetDemo } from "@/components/ui/sheet-menu";
+import { maxMessageLength } from "@/lib/utils";
 
 export default function Home() {
   const router = useRouter();
@@ -31,7 +33,9 @@ export default function Home() {
       },
       onError: (error) => {
         toast.error(
-          error instanceof Error ? error.message : "Erro ao fazer upload",
+          error instanceof Error
+            ? maxMessageLength(error.message)
+            : "Erro ao fazer upload",
         );
       },
     });
@@ -61,9 +65,12 @@ export default function Home() {
         <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
           Context AI
         </h2>
-        <div className="hidden sm:flex  items-center gap-1 sm:gap-4">
-          <Button variant="outline" >Login</Button>
+        <div className="hidden sm:flex  items-center gap-1 sm:gap-1">
+          <Button variant="outline">Login</Button>
           <Button variant="default">Signin</Button>
+        </div>
+        <div className="flex sm:hidden z-50">
+          <SheetDemo />
         </div>
       </header>
 
@@ -90,8 +97,11 @@ export default function Home() {
               className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
               onChange={handleUpload}
               disabled={isPending}
+              onClick={(e) => {
+                (e.target as HTMLInputElement).value = "";
+              }}
             />
-            <Button variant="default" size="lg">
+            <Button variant="default" className="w-36!" size="lg">
               Context <ArrowUpFromLine className="w-4 h-4 ml-1" />
             </Button>
           </div>

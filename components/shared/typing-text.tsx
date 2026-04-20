@@ -2,8 +2,11 @@
 
 import { useEffect, useState } from "react";
 
-export default function TypingText() {
-  const text = "O Context AI foi criado para fornecer respostas inteligentes com base no seu contexto.";
+export default function TypingText({
+  text = "O Context AI foi criado para fornecer respostas inteligentes com base no seu contexto.",
+}: {
+  text?: string;
+}) {
   const [displayed, setDisplayed] = useState("");
 
   useEffect(() => {
@@ -13,11 +16,11 @@ export default function TypingText() {
       setDisplayed(text.slice(0, i));
       i++;
 
-      if (i > text.length) clearInterval(interval);
+      if (i > text.length) {
+        return () => clearInterval(interval);
+      }
     }, 50);
-
-    return () => clearInterval(interval);
-  }, []);
+  }, [text]);
 
   return <>{displayed}|</>;
 }

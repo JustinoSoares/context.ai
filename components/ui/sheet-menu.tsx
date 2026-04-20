@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Sheet,
@@ -17,7 +16,7 @@ export function SheetDemo() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Menu className="w-8 h-8 cursor-pointer" />
+        <Menu className="w-4 h-4 cursor-pointer" />
       </SheetTrigger>
       <SheetContent className="h-full pt-8">
         <SheetHeader>
@@ -42,9 +41,13 @@ export function SheetDemo() {
           </div>
         </div>
         <SheetFooter>
-          <Button type="submit">Login</Button>
+          <Button className="w-full!" size={"lg"} type="submit">
+            Login
+          </Button>
           <SheetClose asChild>
-            <Button variant="outline">Sign</Button>
+            <Button className="w-full!" size={"lg"} variant="outline">
+              Sign
+            </Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>

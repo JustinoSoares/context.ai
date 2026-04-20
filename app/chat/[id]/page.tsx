@@ -6,7 +6,7 @@ import {
   Brain,
   Check,
   Copy,
-  Image,
+  Images,
   SendHorizontal,
   Settings,
 } from "lucide-react";
@@ -16,6 +16,9 @@ import { useParams } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import { ask } from "@/services/api/routers";
 import { SheetDemo } from "@/components/ui/sheet-menu";
+import TypingText from "@/components/shared/typing-text";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type Props = {
   is_ia: boolean;
@@ -42,7 +45,8 @@ function IaMessage({ content }: { content: string }) {
         <ReactMarkdown>{content}</ReactMarkdown>
         <button
           onClick={handleCopy}
-          className="flex items-center gap-1 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity mt-2">
+          className="flex items-center gap-1 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity mt-2"
+        >
           {copied ? (
             <>
               <Check className="w-3 h-3" /> Copiado
@@ -78,6 +82,7 @@ export default function ChatPage() {
   const document_id = params.id as string;
   const queryClient = useQueryClient();
   const [isTyping, setIsTyping] = useState(false);
+  const router = useRouter();
 
   const { mutate: askAI } = useMutation({
     mutationFn: ({ question, document_id }: AskParams) =>
@@ -140,23 +145,21 @@ export default function ChatPage() {
       <BackgroundBlobs />
 
       {/* Header */}
-      <div className="flex justify-between items-center shrink-0">
-        <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-          Context AI
-        </h2>
-        <div className="hidden sm:flex  items-center gap-1 sm:gap-4">
+      <div className="flex justify-between items-center shrink-0 cursor-pointer">
+        <Link href="/">
+          <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent cursor-pointer">
+            Context AI
+          </h2>
+        </Link>
+        <div className="hidden sm:flex  items-center gap-1 sm:gap-1">
           <Button variant="outline" size="sm" className="hidden sm:flex">
-            <Image className="w-4 h-4 mr-1" /> Image
+            <Images className="w-4 h-4 mr-1" /> Image
           </Button>
           <div className="hover:bg-gray-100 cursor-pointer p-2 rounded-full">
             <Settings className="w-5 h-5" />
           </div>
-          <Button variant="outline" >
-            Login
-          </Button>
-          <Button variant="default">
-            Signin
-          </Button>
+          <Button variant="outline">Login</Button>
+          <Button variant="default">Signin</Button>
         </div>
         <div className="flex sm:hidden">
           <SheetDemo />
@@ -170,10 +173,11 @@ export default function ChatPage() {
             [scrollbar-width:thin]
             [scrollbar-color:transparent_transparent]
             hover:[scrollbar-color:hsl(var(--primary)/0.3)_transparent]
-            transition-colors">
+            transition-colors"
+        >
           {messages.length === 0 && (
             <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm text-center px-4">
-              Faz uma pergunta sobre o teu documento.
+              <TypingText text="Faça uma pergunta sobre o teu documento." />
             </div>
           )}
           {messages.map((msg, index) =>
@@ -206,7 +210,8 @@ export default function ChatPage() {
           />
           <div
             className="flex bg-primary items-center p-2 rounded-full shrink-0 cursor-pointer hover:opacity-90 transition-opacity mb-[1px]"
-            onClick={handleSend}>
+            onClick={handleSend}
+          >
             <SendHorizontal className="text-white w-4 h-4" />
           </div>
         </div>
